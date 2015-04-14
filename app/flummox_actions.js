@@ -2,11 +2,12 @@ import { Actions } from 'flummox';
 
 class MessageActions extends Actions {
 
-    createMessage(messageContent) {
-        return {
-            content: messageContent,
-            date: Date.now()
-        };
+    async createMessage(messageContent) {
+        try {
+            return await serverCreateMessage(messageContent);
+        } catch (error) {
+            // handle error somehow
+        }
     }
 
 }
