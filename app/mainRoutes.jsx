@@ -4,6 +4,7 @@ import { Route, DefaultRoute, NotFoundRoute } from "react-router";
 import Application  from "./routeHandlers/Application";
 import SomePage     from "./routeHandlers/SomePage";
 import ReadmePage   from "./routeHandlers/ReadmePage";
+import UsersPage     from "./routeHandlers/UsersPage"; // todo fix after merge
 import TodoPage     from "./routeHandlers/TodoPage";
 import TodoListPage from "./routeHandlers/TodoListPage";
 import TodoItemPage from "./routeHandlers/TodoItemPage";
@@ -19,6 +20,7 @@ module.exports = (
 	<Route name="app" path="/" handler={Application}>
 		<Route name="some-page" path="/some-page" handler={SomePage} />
 		<Route name="readme" path="/readme" handler={ReadmePage} />
+		<Route name="users" path="/users" handler={UsersPage} />
 		<Route name="todo" path="/todo" handler={TodoPage} >
 			<Route name="todolist" path="list/:list" handler={TodoListPage} />
 			<Route name="todoitem" path="item/:item" handler={TodoItemPage} />
