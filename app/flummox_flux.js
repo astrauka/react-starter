@@ -1,6 +1,8 @@
 import { Flummox } from 'flummox';
+import MessageActions from './flummox_actions.js';
+import MessageStore from './flummox_stores.js';
 
-class Flux extends Flummox {
+export default class Flux extends Flummox {
     constructor() {
         super();
 

@@ -1,6 +1,6 @@
 import { Store } from 'flummox';
 
-class MessageStore extends Store {
+export default class MessageStore extends Store {
 
     constructor(flux) {
         super(); // Don't forget this step

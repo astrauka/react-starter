@@ -1,6 +1,6 @@
 import { Actions } from 'flummox';
 
-class MessageActions extends Actions {
+export default class MessageActions extends Actions {
 
     async createMessage(messageContent) {
         try {
