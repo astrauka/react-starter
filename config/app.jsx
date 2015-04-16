@@ -6,7 +6,7 @@ var stores = require("../app/" + __resourceQuery.substr(1) + "Stores");
 import withTimeout from "./withTimeout";
 import ReactUpdates from "react/lib/ReactUpdates";
 import StoresWrapper from "./StoresWrapper";
-//var Flux = require("../app/flummox_flux.js");
+var Flux = require("../app/flummox_flux.js");
 
 var initialRun = true;
 
@@ -14,7 +14,7 @@ var initialRun = true;
 Router.run(routes, Router.HistoryLocation, function(Application, state) {
 
 	// The instance that holds all Flummox actions and stores.
-	//const flux = new Flux();
+	const flux = new Flux();
 
 	// On every page navigation invalidate data from the stores
 	// This is not needed when the server notifies the client about changes (WebSocket, SSE)
