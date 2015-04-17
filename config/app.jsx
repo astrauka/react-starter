@@ -7,6 +7,7 @@ import withTimeout from "./withTimeout";
 import ReactUpdates from "react/lib/ReactUpdates";
 import StoresWrapper from "./StoresWrapper";
 var Flux = require("../app/flummox_flux.js");
+import FluxComponent from 'flummox/component';
 
 // The instance that holds all Flummox actions and stores.
 const flux = new Flux();
@@ -45,6 +46,7 @@ Router.run(routes, Router.HistoryLocation, function(Application, state) {
 		});
 
 		// Render the components with the stores
-		React.render(<StoresWrapper Component={Application} stores={stores}/>, document.getElementById("content"));
+		React.render(<FluxComponent flux={flux}><StoresWrapper Component={Application} stores={stores}/></FluxComponent>, document.getElementById("content"));
+		// ^ using both FluxComponent (from Flummox) and StoresWrapper (from items-store)
 	});
 });

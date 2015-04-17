@@ -6,6 +6,10 @@ var routes = require("../app/" + __resourceQuery.substr(1) + "Routes");
 var storesDescriptions = require("../app/" + __resourceQuery.substr(1) + "StoresDescriptions");
 import html from "../app/prerender.html";
 import StoresWrapper from "./StoresWrapper";
+import FluxComponent from 'flummox/component';
+
+// The instance that holds all Flummox actions and stores.
+const flux = new Flux();
 
 // create stores for prerending
 // readItems contains async methods for fetching the data from database
@@ -35,7 +39,8 @@ module.exports = function(path, readItems, scriptUrl, styleUrl, commonsUrl, call
 		}, function() {
 
 			// prerender the application with the stores
-			var application = React.renderToString(<StoresWrapper Component={Application} stores={stores}/>);
+			var application = React.renderToString(<FluxComponent flux={flux}><StoresWrapper Component={Application} stores={stores}/></FluxComponent>);
+			// ^ using both FluxComponent (from Flummox) and StoresWrapper (from items-store)
 
 			// format the full page
 			callback(null, html
