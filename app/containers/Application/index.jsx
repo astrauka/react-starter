@@ -12,14 +12,23 @@ export default class Application extends React.Component {
 			loading: !!transition
 		};
 	}
+	componentDidMount: function() {
+		var flux = this.props.flux;
+		console.log('found flux in app?:');
+		console.log(flux);
+	}
 	render() {
+		var flux = this.props.flux;
+		
 		var { loading } = this.props;
 		return <div className={styles.this + (loading ? " " + styles.loading : "")}>
 			<div className={styles.loadingElement}>loading...</div>
 			<h1>react-starter</h1>
 			<MainMenu />
 			<button onClick={this.update}>Update todolist data</button>
-			<RouteHandler />
+			<FluxComponent flux={flux}>
+				<RouteHandler />
+			</FluxComponent>
 		</div>;
 	}
 	update() {

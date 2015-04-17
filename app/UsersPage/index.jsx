@@ -4,6 +4,13 @@ var React = require("react");
 var UserList = require("./UserList.jsx");
 
 var UsersPage = React.createClass({
+
+	componentDidMount: function() {
+		var flux = this.props.flux;
+		console.log('found flux in userspage?:');
+		console.log(flux);
+	},
+
 	render: function() {
 		var users = [{
 			username: "testkees",
