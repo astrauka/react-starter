@@ -11,6 +11,14 @@ export default class Flux extends Flummox {
 
         // The extra argument (reference to this Flux instance) gets passed to the UserStore constructor.
         this.createStore('users', UserStore, this);
+
+        // Debug
+        this.on('dispatch', function (payload) {
+            console.log('dispatching -> ',  payload);
+        });
+        this.on('error', function (err) {
+            console.error(err.stack);
+        });
     }
 
 }
