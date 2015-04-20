@@ -5,7 +5,7 @@ var UserItem = require('./UserItem.jsx');
 
 var UserList = React.createClass({
     render: function() {
-        var users = this.props.users;
+        var users = this.props.usersArray;
         var userCount = users.length;
 
         // Create JSX rows

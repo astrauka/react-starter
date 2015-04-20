@@ -2,11 +2,11 @@ import { Actions } from 'flummox';
 
 export default class UserActions extends Actions {
 
-    async createUser(userName, userFullname, userEmail) {
+    async createUser(userUsername, userFullname, userEmail) {
         try {
             //return await serverCreateUser();   // Could communicate with server here.
             return {
-                username: userName,
+                username: userUsername,
                 fullname: userFullname,
                 email: userEmail
             };

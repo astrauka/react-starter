@@ -9,7 +9,22 @@ export default class UserStore extends Store {
         this.register(userActionIds.createUser, this.handleNewUser);
 
         this.state = {
-            users: []
+            //users: []
+
+            // Interim dummy data:
+            users: [{
+                username: "testkees",
+                fullname: "Test Kees",
+                email: "testkees@schaapzegt.be"
+            }, {
+                username: "anban1984",
+                fullname: "Anna Banana",
+                email: "annabanana3@minio.nz"
+            }, {
+                username: "xavlee",
+                fullname: "Xavier Lee",
+                email: "xavierlee@example.com"
+            }]
         };
     }
 
