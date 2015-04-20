@@ -1,13 +1,14 @@
 import { Actions } from 'flummox';
 
-export default class MessageActions extends Actions {
+export default class UserActions extends Actions {
 
-    async createMessage(messageContent) {
+    async createUser(userName, userFullname, userEmail) {
         try {
-            //return await serverCreateMessage(messageContent);
+            //return await serverCreateUser();   // Could communicate with server here.
             return {
-                content: messageContent,
-                date: Date.now(),
+                username: userName,
+                fullname: userFullname,
+                email: userEmail
             };
         } catch (error) {
             // handle error somehow

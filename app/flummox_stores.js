@@ -1,21 +1,21 @@
 import { Store } from 'flummox';
 
-export default class MessageStore extends Store {
+export default class UserStore extends Store {
 
     constructor(flux) {
         super(); // Don't forget this step
 
-        const messageActionIds = flux.getActionIds('messages');
-        this.register(messageActionIds.createMessage, this.handleNewMessage);
+        const userActionIds = flux.getActionIds('users');
+        this.register(userActionIds.createUser, this.handleNewUser);
 
         this.state = {
-            messages: [],
+            users: []
         };
     }
 
-    handleNewMessage(message) {
+    handleNewUser(user) {
         this.setState({
-            messages: this.state.messages.concat([message]),
+            users: this.state.users.concat([user])
         });
     }
 
