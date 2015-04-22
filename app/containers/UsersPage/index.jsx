@@ -2,7 +2,7 @@
 
 var React = require("react");
 var UserList = require("./UserList.jsx");
-import FluxComponent from 'flummox/component';
+import FluxComponent from '../../../node_modules/flummox/component';
 
 var UsersPage = React.createClass({
 

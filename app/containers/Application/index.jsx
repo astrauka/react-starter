@@ -2,6 +2,7 @@ import React from "react";
 import { RouteHandler } from "react-router";
 import MainMenu from "components/MainMenu";
 import { Todo as TodoActions } from "actions";
+import FluxComponent from 'flummox/component';
 
 import styles from "./style.css";
 
