@@ -13,7 +13,7 @@ export default class Application extends React.Component {
 			loading: !!transition
 		};
 	}
-	componentDidMount: function() {
+	componentDidMount() {
 		var flux = this.props.flux;
 		console.log('found flux in app?:');
 		console.log(flux);
