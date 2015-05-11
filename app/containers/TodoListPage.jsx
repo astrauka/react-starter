@@ -12,7 +12,20 @@ export default class TodoListPage extends React.Component {
 			list: fetchTodoList(stores, list)
 		};
 	}
+
+	static getInitialState() {
+		console.log("TodoListPage.getInitialState() called");
+		return {demo: "Hello #77"}
+	}
+
+	componentDidMount() {
+		console.log("TodoListPage.componentDidMount() called");
+	}
+
 	render() {
+		console.log("TodoListPage.render() called, and this.state is");
+		console.log(this.state);
+
 		var { id, list } = this.props;
 		return <div>
 			<h3>Todolist: {id}</h3>
