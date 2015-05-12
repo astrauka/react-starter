@@ -1,13 +1,14 @@
 import React from "react";
 
 export default class SomePage extends React.Component {
-	static getProps() {
-		return {};
+	constructor(props) {
+		super(props);
+		console.log("SomePage.constructor() called");
+		this.state = { foo: "bar" };
 	}
 
-	getInitialState() {
-		console.log("SomePage.getInitialState() called");
-		return {demo: "Hello #77"}
+	static getProps() {
+		return {};
 	}
 
 	componentDidMount() {

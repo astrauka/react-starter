@@ -5,17 +5,18 @@ import TodoItem from "components/TodoItem";
 import NewTodoItemEditor from "components/NewTodoItemEditor";
 
 export default class TodoListPage extends React.Component {
+	constructor(props) {
+		super(props);
+		console.log("TodoListPage.constructor() called");
+		this.state = { foo: "bar" };
+	}
+
 	static getProps(stores, params) {
 		var { list } = params;
 		return {
 			id: list,
 			list: fetchTodoList(stores, list)
 		};
-	}
-
-	getInitialState() {
-		console.log("TodoListPage.getInitialState() called");
-		return {demo: "Hello #77"}
 	}
 
 	componentDidMount() {
