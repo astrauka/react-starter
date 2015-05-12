@@ -13,7 +13,7 @@ export default class TodoListPage extends React.Component {
 		};
 	}
 
-	static getInitialState() {
+	getInitialState() {
 		console.log("TodoListPage.getInitialState() called");
 		return {demo: "Hello #77"}
 	}

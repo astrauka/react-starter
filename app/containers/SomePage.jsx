@@ -5,13 +5,14 @@ export default class SomePage extends React.Component {
 		return {};
 	}
 
-	static getInitialState() {
+	getInitialState() {
 		console.log("SomePage.getInitialState() called");
 		return {demo: "Hello #77"}
 	}
 
 	componentDidMount() {
 		console.log("SomePage.componentDidMount() called");
+		this.setState({dam: "bambam"});
 	}
 
 	render() {
