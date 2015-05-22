@@ -29,6 +29,7 @@
     "express": "^4.7.2",
     "extract-text-webpack-plugin": "^0.7.0",
     "file-loader": "^0.8.1",
+    "flux": "^2.0.3",
     "html-loader": "^0.3.0",
     "items-store": "^0.6.1",
     "less": "^2.1.2",

@@ -5,6 +5,10 @@ import withTimeout from "./withTimeout";
 import ReactUpdates from "react/lib/ReactUpdates";
 import StoresWrapper from "./StoresWrapper";
 
+// dibkiss test
+var ProductData = require('../app/dibkiss-utils/ProductData');
+var CartAPI = require('../app/dibkiss-utils/CartAPI.js')
+
 export default function renderApplication(routes, stores, options) {
 	var timeout = options.timeout || 600;
 
@@ -39,6 +43,16 @@ export default function renderApplication(routes, stores, options) {
 			ReactUpdates.batchedUpdates(function() {
 				stores.Router.setItemData("transition", null);
 			});
+
+
+			// dibkiss test
+
+			// Load Mock Product Data into localStorage
+			ProductData.init();
+
+			// Load Mock API Call
+			CartAPI.getProductData();
+
 
 			// Render the components with the stores
 			React.render(
