@@ -2,6 +2,10 @@
 
 Starter template for react and webpack.
 
+## about this branch flux-dibkiss
+I tried Flummox and Items-Store but think these are way more difficult than i understand/need right now.
+So this is an attempt at my own flux DIY KISS implementation based on https://scotch.io/tutorials/creating-a-simple-shopping-cart-with-react-js-and-flux
+
 ## Features
 
 * Compilation with webpack
