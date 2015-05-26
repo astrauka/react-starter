@@ -6,7 +6,7 @@ import ReactUpdates from "react/lib/ReactUpdates";
 import StoresWrapper from "./StoresWrapper";
 
 // dibkiss test
-var ProductData = require('../app/dibkiss-utils/ProductData');
+var ProductData = require('../app/dibkiss-utils/MockProductData');
 var CartAPI = require('../app/dibkiss-utils/CartAPI.js')
 
 export default function renderApplication(routes, stores, options) {
