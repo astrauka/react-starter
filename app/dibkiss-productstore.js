@@ -6,17 +6,20 @@ var FluxCartConstants = require('dibkiss-constants.js');
 var Objectassign = require('react/lib/Object.assign');
 
 // Define initial data points
-var _product = {}, _selected = null;
+var _dataProductStore = {
+    product: {},
+    selectedproductvariant: null
+};
 
 // Method to load product data from mock API
 function loadProductData(data) {
-    _product = data[0];
-    _selected = data[0].variants[0];
+    _dataProductStore.product = data[0];
+    _dataProductStore.selectedproductvariant = data[0].variants[0];
 }
 
 // Method to set the currently selected product variation
 function setSelected(index) {
-    _selected = _product.variants[index];
+    _dataProductStore.selectedproductvariant = _dataProductStore.product.variants[index];
 }
 
 
@@ -25,12 +28,12 @@ var ProductStore = Objectassign({}, EventEmitter.prototype, {
 
     // Return Product data
     getProduct: function() {
-        return _product;
+        return _dataProductStore.product;
     },
 
     // Return selected Product
     getSelected: function(){
-        return _selected;
+        return _dataProductStore.selectedproductvariant;
     },
 
     // Emit Change event
