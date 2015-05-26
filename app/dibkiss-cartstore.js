@@ -6,22 +6,25 @@ var FluxCartConstants = require('dibkiss-constants.js');
 var Objectassign = require('react/lib/Object.assign');
 
 // Define initial data points
-var _cartproducts = {}, _cartVisible = false;
+var _dataCartStore = {
+    cartproducts: {},
+    cartVisible: false
+}
 
 // Add product to cart
 function add(sku, update) {
-    update.quantity = sku in _cartproducts ? _cartproducts[sku].quantity + 1 : 1;
-    _cartproducts[sku] = Objectassign({}, _cartproducts[sku], update)
+    update.quantity = sku in _dataCartStore.cartproducts ? _dataCartStore.cartproducts[sku].quantity + 1 : 1;
+    _dataCartStore.cartproducts[sku] = Objectassign({}, _dataCartStore.cartproducts[sku], update)
 }
 
 // Set cart visibility
 function setCartVisible(cartVisible) {
-    _cartVisible = cartVisible;
+    _dataCartStore.cartVisible = cartVisible;
 }
 
 // Remove item from cart
 function removeItem(sku) {
-    delete _cartproducts[sku];
+    delete _dataCartStore.cartproducts[sku];
 }
 
 // Extend Cart Store with EventEmitter to add eventing capabilities
@@ -29,20 +32,20 @@ var CartStore = Objectassign({}, EventEmitter.prototype, {
 
     // Return cart items
     getCartItems: function() {
-        return _cartproducts;
+        return _dataCartStore.cartproducts;
     },
 
     // Return # of items in cart
     getCartCount: function() {
-        return Object.keys(_cartproducts).length;
+        return Object.keys(_dataCartStore.cartproducts).length;
     },
 
     // Return cart cost total
     getCartTotal: function() {
         let total = 0;
-        for(let product in _cartproducts){
-            if(_cartproducts.hasOwnProperty(product)){
-                total += _cartproducts[product].price * _cartproducts[product].quantity;
+        for(let product in _dataCartStore.cartproducts){
+            if(_dataCartStore.cartproducts.hasOwnProperty(product)){
+                total += _dataCartStore.cartproducts[product].price * _dataCartStore.cartproducts[product].quantity;
             }
         }
         return total.toFixed(2);
@@ -50,7 +53,7 @@ var CartStore = Objectassign({}, EventEmitter.prototype, {
 
     // Return cart visibility state
     getCartVisible: function() {
-        return _cartVisible;
+        return _dataCartStore.cartVisible;
     },
 
     // Emit Change event
