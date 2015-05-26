@@ -62,8 +62,8 @@ AppDispatcher.register(function(payload) {
             loadProductData(action.data);
             break;
 
-        // Respond to SELECT_PRODUCT action
-        case FluxCartConstants.SELECT_PRODUCT:
+        // Respond to SELECT_PRODUCTVARIANT action
+        case FluxCartConstants.SELECT_PRODUCTVARIANT:
             setSelected(action.data);
             break;
 
