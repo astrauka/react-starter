@@ -1,7 +1,9 @@
 var AppDispatcher = require('dibkiss-dispatcher.js');
 var EventEmitter = require('events').EventEmitter;
 var FluxCartConstants = require('dibkiss-constants.js');
-var _ = require('underscore');
+
+// polyfill
+var Objectassign = require('react/lib/Object.assign');
 
 // Define initial data points
 var _products = {}, _cartVisible = false;
@@ -9,7 +11,7 @@ var _products = {}, _cartVisible = false;
 // Add product to cart
 function add(sku, update) {
     update.quantity = sku in _products ? _products[sku].quantity + 1 : 1;
-    _products[sku] = _.extend({}, _products[sku], update)
+    _products[sku] = Objectassign({}, _products[sku], update)
 }
 
 // Set cart visibility
@@ -23,7 +25,7 @@ function removeItem(sku) {
 }
 
 // Extend Cart Store with EventEmitter to add eventing capabilities
-var CartStore = _.extend({}, EventEmitter.prototype, {
+var CartStore = Objectassign({}, EventEmitter.prototype, {
 
     // Return cart items
     getCartItems: function() {
