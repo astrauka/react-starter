@@ -1,6 +1,7 @@
 var AppDispatcher = require('dibkiss-dispatcher.js');
 var EventEmitter = require('events').EventEmitter;
 var FluxCartConstants = require('dibkiss-constants.js');
+var _ = require('underscore');
 
 // Define initial data points
 var _product = {}, _selected = null;
@@ -18,7 +19,7 @@ function setSelected(index) {
 
 
 // Extend ProductStore with EventEmitter to add eventing capabilities
-var ProductStore = Object.assign({}, EventEmitter.prototype, {
+var ProductStore = _.extend({}, EventEmitter.prototype, {
 
     // Return Product data
     getProduct: function() {
