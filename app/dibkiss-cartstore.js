@@ -39,8 +39,8 @@ var CartStore = Objectassign({}, EventEmitter.prototype, {
 
     // Return cart cost total
     getCartTotal: function() {
-        var total = 0;
-        for(product in _products){
+        let total = 0;
+        for(let product in _products){
             if(_products.hasOwnProperty(product)){
                 total += _products[product].price * _products[product].quantity;
             }
