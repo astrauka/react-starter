@@ -28,7 +28,7 @@ var FluxProduct = React.createClass({
             this.props.selected.inventory;
         return (
             <div className="flux-product">
-                <img src={'img/' + this.props.product.image}/>
+                <img src={'dibkiss/' + this.props.product.image}/>
                 <div className="flux-product-detail">
                     <h1 className="name">{this.props.product.name}</h1>
                     <p className="description">{this.props.product.description}</p>
