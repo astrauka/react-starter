@@ -6,12 +6,12 @@ var FluxCartConstants = require('dibkiss-constants.js');
 var Objectassign = require('react/lib/Object.assign');
 
 // Define initial data points
-var _products = {}, _cartVisible = false;
+var _cartproducts = {}, _cartVisible = false;
 
 // Add product to cart
 function add(sku, update) {
-    update.quantity = sku in _products ? _products[sku].quantity + 1 : 1;
-    _products[sku] = Objectassign({}, _products[sku], update)
+    update.quantity = sku in _cartproducts ? _cartproducts[sku].quantity + 1 : 1;
+    _cartproducts[sku] = Objectassign({}, _cartproducts[sku], update)
 }
 
 // Set cart visibility
@@ -21,7 +21,7 @@ function setCartVisible(cartVisible) {
 
 // Remove item from cart
 function removeItem(sku) {
-    delete _products[sku];
+    delete _cartproducts[sku];
 }
 
 // Extend Cart Store with EventEmitter to add eventing capabilities
@@ -29,20 +29,20 @@ var CartStore = Objectassign({}, EventEmitter.prototype, {
 
     // Return cart items
     getCartItems: function() {
-        return _products;
+        return _cartproducts;
     },
 
     // Return # of items in cart
     getCartCount: function() {
-        return Object.keys(_products).length;
+        return Object.keys(_cartproducts).length;
     },
 
     // Return cart cost total
     getCartTotal: function() {
         let total = 0;
-        for(let product in _products){
-            if(_products.hasOwnProperty(product)){
-                total += _products[product].price * _products[product].quantity;
+        for(let product in _cartproducts){
+            if(_cartproducts.hasOwnProperty(product)){
+                total += _cartproducts[product].price * _cartproducts[product].quantity;
             }
         }
         return total.toFixed(2);
