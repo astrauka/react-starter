@@ -7,17 +7,18 @@ module.exports = {
     demouser: "auser",
     demopass: "apass",
 
-    demoLoadItems: function (myPlaylistId, myCallback) {
-        request.get(this.demoapi + myPlaylistId + '/')
+    demoLoadItems: function (myProjectId, myPlaylistId, myCallback) {
+        let url = "http://test2.qwolk.q-lite.org/v0/projects/"+ myProjectId +"/playlists/"+ myPlaylistId +"/items/";
+        request.get(url)
             //.query({filtertags: ['tag-a','tag-b'], range: '1..5', order: 'desc' })
             //.timeout
             .auth(this.demouser, this.demopass)
             .accept('application/json')
-            .end(function (resp) {
-                if (resp.ok) {
-                    myCallback(true, resp.body);
+            .end(function (err, res) {
+                if (res.ok) {
+                    myCallback(true, res.body);
                 } else {
-                    myCallback(false, resp); // resp for debug
+                    myCallback(false, res); // resp for debug
                 }
             });
     },
@@ -27,13 +28,13 @@ module.exports = {
             .send({demotext: myText, duration: myDuration})
             .auth(this.demouser, this.demopass)
             .accept('application/json')
-            .end(function (resp) {
-                if (resp.ok) {
-                    myCallback(true, resp.body);
-                    console.log("demoAddItem ok: " + resp.text);
+            .end(function (err, res) {
+                if (res.ok) {
+                    myCallback(true, res.body);
+                    console.log("demoAddItem ok: " + res.text);
                 } else {
                     myCallback(false, null);
-                    console.log("demoAddItem fail: " + resp.text);
+                    console.log("demoAddItem fail: " + res.text);
                 }
             });
     },
@@ -42,13 +43,13 @@ module.exports = {
         request.del(this.demoapi + myPlaylistId + '/items/' + myID)
             .auth(this.demouser, this.demopass)
             .accept('application/json')
-            .end(function (resp) {
-                if (resp.ok) {
-                    myCallback(true, resp.body);
-                    console.log("demoRemoveItem ok: " + resp.text);
+            .end(function (err, res) {
+                if (res.ok) {
+                    myCallback(true, res.body);
+                    console.log("demoRemoveItem ok: " + res.text);
                 } else {
                     myCallback(false, null);
-                    console.log("demoRemoveItem fail: " + resp.text);
+                    console.log("demoRemoveItem fail: " + res.text);
                 }
             });
     },
@@ -58,13 +59,13 @@ module.exports = {
             .send({demotext: myText, duration: myDuration})
             .auth(this.demouser, this.demopass)
             .accept('application/json')
-            .end(function (resp) {
-                if (resp.ok) {
+            .end(function (err, res) {
+                if (res.ok) {
                     myCallback(true, resp.body);
-                    console.log("demoEditItem ok: " + resp.text);
+                    console.log("demoEditItem ok: " + res.text);
                 } else {
                     myCallback(false, null);
-                    console.log("demoEditItem fail: " + resp.text);
+                    console.log("demoEditItem fail: " + res.text);
                 }
             });
     }
