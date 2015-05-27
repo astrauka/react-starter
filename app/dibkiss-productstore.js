@@ -5,19 +5,20 @@ var FluxCartConstants = require('dibkiss-constants');
 // polyfill
 var Objectassign = require('react/lib/Object.assign');
 
-// Define initial data points
+
+// Internal data storage as global variable:
 var _dataProductStore = {
     product: {},
     selectedproductvariant: null
 };
 
-// Method to load product data from mock API
+// Internal method to load product data from mock API
 function loadProductData(data) {
     _dataProductStore.product = data[0];
     _dataProductStore.selectedproductvariant = data[0].variants[0];
 }
 
-// Method to set the currently selected product variation
+// Internal method to set the currently selected product variation
 function setSelected(index) {
     _dataProductStore.selectedproductvariant = _dataProductStore.product.variants[index];
 }

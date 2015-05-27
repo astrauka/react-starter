@@ -5,22 +5,24 @@ var FluxCartConstants = require('dibkiss-constants');
 // polyfill
 var Objectassign = require('react/lib/Object.assign');
 
-// Define initial data points
+
+// Internal data storage as global variable:
 var _dataCartStore = {
     cartproducts: {},
     cartVisible: false
 }
 
-// Add product to cart
+// Internal method to add product to cart
 function add(sku, update) {
     update.quantity = sku in _dataCartStore.cartproducts ? _dataCartStore.cartproducts[sku].quantity + 1 : 1;
     _dataCartStore.cartproducts[sku] = Objectassign({}, _dataCartStore.cartproducts[sku], update)
 }
 
-// Set cart visibility
+// Internal method to set cart visibility
 function setCartVisible(cartVisible) {
     _dataCartStore.cartVisible = cartVisible;
 }
+
 
 // Remove item from cart
 function removeItem(sku) {
