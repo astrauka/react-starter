@@ -43,6 +43,28 @@ var FluxCartActions = {
             actionType: FluxCartConstants.CART_VISIBLE,
             cartVisible: cartVisible
         })
+    },
+
+
+
+    loadPlaylistItems: function(projectID, playlistID) {
+        AppDispatcher.handleAction({
+            actionType: FluxCartConstants.LOAD_PLAYLISTITEMS,
+            projectID: projectID,
+            playlistID: playlistID
+        })
+    },
+    loadPlaylistItems_success: function(data) {
+        AppDispatcher.handleAction({
+            actionType: FluxCartConstants.LOAD_PLAYLISTITEMS_SUCCESS,
+            data: data
+        })
+    },
+    loadPlaylistItems_fail: function(error) {
+        AppDispatcher.handleAction({
+            actionType: FluxCartConstants.LOAD_PLAYLISTITEMS_FAIL,
+            error: error
+        })
     }
 
 };

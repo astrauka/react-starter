@@ -7,7 +7,8 @@ import StoresWrapper from "./StoresWrapper";
 
 // dibkiss test
 var ProductData = require('../app/dibkiss-utils/MockProductData');
-var CartAPI = require('../app/dibkiss-utils/CartAPI.js')
+var CartAPI = require('../app/dibkiss-utils/CartAPI');
+var WolkAPI = require('../app/dibkiss-utils/WolkAPI');
 
 export default function renderApplication(routes, stores, options) {
 	var timeout = options.timeout || 600;
@@ -52,7 +53,7 @@ export default function renderApplication(routes, stores, options) {
 
 			// Load Mock API Call
 			CartAPI.getProductData();
-
+			WolkAPI.loadPlaylist(1, 3);
 
 			// Render the components with the stores
 			React.render(
