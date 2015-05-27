@@ -14,6 +14,7 @@ export default class MainMenu extends React.Component {
 				<li>Open the chat demo: <Link to="chat" params={{room: "home"}}>Chat</Link>.</li>
 				<li>Open the page that shows <Link to="readme">README.md</Link>.</li>
 				<li>Or try your luck at the <Link to="dibkiss">dibkiss page</Link>.</li>
+				<li>Or try your luck at the <Link to="dibkissplaylist">dibkiss Playlist page</Link>.</li>
 			</ul>
 		</div>;
 	}
