@@ -1,6 +1,7 @@
 var AppDispatcher = require('dibkiss-dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var FluxCartConstants = require('dibkiss-constants');
+var WolkAPI = require('dibkiss-utils/WolkAPI');
 
 // polyfill
 var Objectassign = require('react/lib/Object.assign');
@@ -58,7 +59,9 @@ AppDispatcher.register(function(payload) {
     var text;
 
     switch(action.actionType) {
-
+        case FluxCartConstants.LOAD_PLAYLISTITEMS:
+            WolkAPI.loadPlaylist(action.projectid, action.playlistid);
+            break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_SUCCESS:
             _PlaylistItemsStoreLoadReceiveData(action.data);
             break;

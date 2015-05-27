@@ -50,8 +50,8 @@ var FluxCartActions = {
     loadPlaylistItems: function(projectID, playlistID) {
         AppDispatcher.handleAction({
             actionType: FluxCartConstants.LOAD_PLAYLISTITEMS,
-            projectID: projectID,
-            playlistID: playlistID
+            projectid: projectID,
+            playlistid: playlistID
         })
     },
     loadPlaylistItems_success: function(data) {
