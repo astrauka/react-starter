@@ -1,5 +1,5 @@
 var React = require('react');
-var FluxCartActions = require('../dibkiss-actions.js');
+var FluxCartActions = require('../dibkiss-actions');
 
 // Flux product view
 var FluxProduct = React.createClass({

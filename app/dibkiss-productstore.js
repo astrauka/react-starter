@@ -1,6 +1,6 @@
-var AppDispatcher = require('dibkiss-dispatcher.js');
+var AppDispatcher = require('dibkiss-dispatcher');
 var EventEmitter = require('events').EventEmitter;
-var FluxCartConstants = require('dibkiss-constants.js');
+var FluxCartConstants = require('dibkiss-constants');
 
 // polyfill
 var Objectassign = require('react/lib/Object.assign');

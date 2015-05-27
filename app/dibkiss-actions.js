@@ -1,5 +1,5 @@
-var AppDispatcher = require('dibkiss-dispatcher.js');
-var FluxCartConstants = require('dibkiss-constants.js');
+var AppDispatcher = require('dibkiss-dispatcher');
+var FluxCartConstants = require('dibkiss-constants');
 
 // Define actions object
 var FluxCartActions = {
