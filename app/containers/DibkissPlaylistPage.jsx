@@ -33,7 +33,7 @@ var DibkissPlaylistPage = React.createClass({
     render: function() {
         return (
             <div>
-                <h1>Playlist items:</h1>
+                <h1>Playlist {this.state.playlistid} items:</h1>
                 <PlaylistItems playlistid={this.state.playlistid} playlistitems={this.state.playlistitems} />
                 {/*
                 <h1>Playlist schedules:</h1>

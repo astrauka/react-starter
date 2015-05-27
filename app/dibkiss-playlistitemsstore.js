@@ -13,9 +13,14 @@ var _dataPlaylistItemsStore = {
 };
 
 // Internal method to load product data from mock API
-function _PlaylistItemsStoreLoadReceiveData(data) {
+function _PlaylistItemsStoreLoadSuccess(data) {
     _dataPlaylistItemsStore.playlistitems = data.items;
     _dataPlaylistItemsStore.playlistid = data.playlistid;
+}
+
+function _PlaylistItemsStoreLoadPending(playlistid) {
+    _dataPlaylistItemsStore.playlistitems = [];
+    _dataPlaylistItemsStore.playlistid = playlistid;
 }
 
 
@@ -61,9 +66,10 @@ AppDispatcher.register(function(payload) {
     switch(action.actionType) {
         case FluxCartConstants.LOAD_PLAYLISTITEMS:
             WolkAPI.loadPlaylist(action.projectid, action.playlistid);
+            _PlaylistItemsStoreLoadPending(action.playlistid);         // Optimistic update.
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_SUCCESS:
-            _PlaylistItemsStoreLoadReceiveData(action.data);
+            _PlaylistItemsStoreLoadSuccess(action.data);
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_FAIL:
             // ??
