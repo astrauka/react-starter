@@ -25,7 +25,7 @@ function _PlaylistItemsStoreLoadSuccess(data) {
 
 function _PlaylistItemsStoreLoadFail(error) {
     _dataPlaylistItemsStore.pending = false;
-    _dataPlaylistItemsStore.error = error;
+    _dataPlaylistItemsStore.error = makeErrorInfoFromSuperagentError(error);
     _dataPlaylistItemsStore.playlistitems = [];
 }
 
@@ -36,6 +36,19 @@ function _PlaylistItemsStoreLoadPending(playlistid) {
     _dataPlaylistItemsStore.playlistitems = [];
 }
 
+
+function makeErrorInfoFromSuperagentError(error) {
+    return makeErrorInfo(
+        error.status,
+        error.response.body!==null ? error.response.body.error.message : error.message
+    );
+}
+function makeErrorInfo(status,message) {
+    return {
+        status:  status,
+        message: message
+    };
+}
 
 // Extend ProductStore with EventEmitter to add eventing capabilities
 var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
