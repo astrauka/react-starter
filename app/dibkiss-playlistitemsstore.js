@@ -20,7 +20,7 @@ function _PlaylistItemsStoreLoadSuccess(data) {
 
 function _PlaylistItemsStoreLoadPending(playlistid) {
     _dataPlaylistItemsStore.playlistitems = [];
-    _dataPlaylistItemsStore.playlistid = playlistid;
+    _dataPlaylistItemsStore.playlistid = playlistid;     // Optimistic update.
 }
 
 
@@ -65,8 +65,10 @@ AppDispatcher.register(function(payload) {
 
     switch(action.actionType) {
         case FluxCartConstants.LOAD_PLAYLISTITEMS:
-            WolkAPI.loadPlaylist(action.projectid, action.playlistid);
-            _PlaylistItemsStoreLoadPending(action.playlistid);         // Optimistic update.
+            _PlaylistItemsStoreLoadPending(action.playlistid);
+            setTimeout(function() {
+            	WolkAPI.loadPlaylist(action.projectid, action.playlistid);
+            }, 2000);
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_SUCCESS:
             _PlaylistItemsStoreLoadSuccess(action.data);

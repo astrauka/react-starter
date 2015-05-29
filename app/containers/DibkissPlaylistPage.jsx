@@ -52,7 +52,7 @@ var DibkissPlaylistPage = React.createClass({
     },
 
     _loadPlaylist2: function() {
-        DibkissActions.loadPlaylistItems(1,2);
+        DibkissActions.loadPlaylistItems(2,2);
     },
     _loadPlaylist3: function() {
         DibkissActions.loadPlaylistItems(1,3);
