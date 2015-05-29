@@ -48,7 +48,10 @@ var DibkissPlaylistPage = React.createClass({
 
     // Method to setState based upon Store changes
     _onChange: function() {
-        this.setState(getPlaylistState());
+        this.setState({
+            playlistid: getPlaylistState().playlistid, // temporary
+            dataItems: getPlaylistState()
+        });
     },
 
     _loadPlaylist2: function() {
