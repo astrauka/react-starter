@@ -41,12 +41,8 @@ function _PlaylistItemsStoreLoadPending(playlistid) {
 var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
 
     // Return Product data
-    getPending: function() {
-        return _dataPlaylistItemsStore.pending;
-    },
-
-    getError: function() {
-        return _dataPlaylistItemsStore.error;
+    getStoredata: function() {
+        return _dataPlaylistItemsStore;
     },
 
     getPlaylistItems: function() {

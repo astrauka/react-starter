@@ -5,7 +5,7 @@ var PlaylistListItem = require('./PlaylistListItem');
 // Flux product view
 var DibkissPlaylistItems = React.createClass({
     render: function() {
-        var { pending, error, playlistid, playlistitems } = this.props;
+        var { pending, error, playlistid, playlistitems } = this.props.storedata;
 
         // Create JSX rows
         var rows = [];

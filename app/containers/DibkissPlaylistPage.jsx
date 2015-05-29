@@ -5,12 +5,7 @@ var DibkissActions = require('../dibkiss-actions');
 
 // Method to retrieve state from Stores
 function getPlaylistState() {
-    return {
-        pending: PlaylistItemsStore.getPending(),
-        error: PlaylistItemsStore.getError(),
-        playlistid: PlaylistItemsStore.getPlaylistID(),
-        playlistitems: PlaylistItemsStore.getPlaylistItems()
-    };
+    return PlaylistItemsStore.getStoredata();
 }
 
 // Define main Controller View
@@ -18,7 +13,10 @@ var DibkissPlaylistPage = React.createClass({
 
     // Get initial state from stores
     getInitialState: function() {
-        return getPlaylistState();
+        return {
+            playlistid: getPlaylistState().playlistid, // temporary
+            dataItems: getPlaylistState()
+        }
     },
 
     // Add change listeners to stores
@@ -36,7 +34,7 @@ var DibkissPlaylistPage = React.createClass({
         return (
             <div>
                 <h1>Playlist {this.state.playlistid} items:</h1>
-                <PlaylistItems pending={this.state.pending} error={this.state.error} playlistid={this.state.playlistid} playlistitems={this.state.playlistitems} />
+                <PlaylistItems storedata={this.state.dataItems} />
                 {/*
                 <h1>Playlist schedules:</h1>
                 */}
