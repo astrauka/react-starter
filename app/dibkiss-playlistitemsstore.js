@@ -86,9 +86,7 @@ AppDispatcher.register(function(payload) {
     switch(action.actionType) {
         case FluxCartConstants.LOAD_PLAYLISTITEMS:
             _PlaylistItemsStoreLoadPending(action.playlistid);
-            setTimeout(function() {
-                WolkAPI.loadPlaylist(action.projectid, action.playlistid);
-            }, 2000);
+            WolkAPI.loadPlaylist(action.projectid, action.playlistid);
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_SUCCESS:
             _PlaylistItemsStoreLoadSuccess(action.data);
