@@ -16,7 +16,7 @@ var DibkissPlaylistItems = React.createClass({
             rows.push(<tr key={-2}><td colSpan="5">Pending..</td></tr>);
         }
         if (error) {
-            rows.push(<tr key={-3}><td colSpan="5">Error: {error.response.body.error.message}</td></tr>);
+            rows.push(<tr key={-3}><td colSpan="5">Error: {error.response.body!==null ? error.response.body.error.message : error.message}</td></tr>);
         }
         if (rows.length===0) {
             rows.push(<tr key={-1}><td colSpan="5">Nothing to display.</td></tr>);
