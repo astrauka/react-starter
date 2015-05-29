@@ -6,6 +6,8 @@ var DibkissActions = require('../dibkiss-actions');
 // Method to retrieve state from Stores
 function getPlaylistState() {
     return {
+        pending: PlaylistItemsStore.getPending(),
+        error: PlaylistItemsStore.getError(),
         playlistid: PlaylistItemsStore.getPlaylistID(),
         playlistitems: PlaylistItemsStore.getPlaylistItems()
     };
@@ -34,7 +36,7 @@ var DibkissPlaylistPage = React.createClass({
         return (
             <div>
                 <h1>Playlist {this.state.playlistid} items:</h1>
-                <PlaylistItems playlistid={this.state.playlistid} playlistitems={this.state.playlistitems} />
+                <PlaylistItems pending={this.state.pending} error={this.state.error} playlistid={this.state.playlistid} playlistitems={this.state.playlistitems} />
                 {/*
                 <h1>Playlist schedules:</h1>
                 */}

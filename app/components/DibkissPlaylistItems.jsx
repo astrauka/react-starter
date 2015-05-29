@@ -5,13 +5,19 @@ var PlaylistListItem = require('./PlaylistListItem');
 // Flux product view
 var DibkissPlaylistItems = React.createClass({
     render: function() {
-        var { playlistid, playlistitems } = this.props;
+        var { pending, error, playlistid, playlistitems } = this.props;
 
         // Create JSX rows
         var rows = [];
         playlistitems.map(function(item, i) {
             rows.push(<PlaylistListItem i={i+1} playlist={playlistid} item={item} key={item.id} onEditItem={this.onEditItem} onRemoveItem={this.onRemoveItem} />);
         }.bind(this));
+        if (pending) {
+            rows.push(<tr key={-2}><td>Pending..</td></tr>);
+        }
+        if (error) {
+            rows.push(<tr key={-3}><td>Error: {error.message}</td></tr>);
+        }
         if (rows.length===0) {
             rows.push(<tr key={-1}><td>Nothing to display.</td></tr>);
         }

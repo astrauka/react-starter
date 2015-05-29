@@ -9,18 +9,31 @@ var Objectassign = require('react/lib/Object.assign');
 
 // Internal data storage as global variable:
 var _dataPlaylistItemsStore = {
-    playlistitems: []
+    pending : false,
+    error : null,
+    playlistitems: [],
+    playlistid: null
 };
 
-// Internal method to load product data from mock API
+// Internal methods
 function _PlaylistItemsStoreLoadSuccess(data) {
-    _dataPlaylistItemsStore.playlistitems = data.items;
+    _dataPlaylistItemsStore.pending = false;
+    _dataPlaylistItemsStore.error = null;
     _dataPlaylistItemsStore.playlistid = data.playlistid;
+    _dataPlaylistItemsStore.playlistitems = data.items;
+}
+
+function _PlaylistItemsStoreLoadFail(error) {
+    _dataPlaylistItemsStore.pending = false;
+    _dataPlaylistItemsStore.error = error;
+    _dataPlaylistItemsStore.playlistitems = [];
 }
 
 function _PlaylistItemsStoreLoadPending(playlistid) {
-    _dataPlaylistItemsStore.playlistitems = [];
+    _dataPlaylistItemsStore.pending = true;
+    _dataPlaylistItemsStore.error = null;
     _dataPlaylistItemsStore.playlistid = playlistid;     // Optimistic update.
+    _dataPlaylistItemsStore.playlistitems = [];
 }
 
 
@@ -28,6 +41,14 @@ function _PlaylistItemsStoreLoadPending(playlistid) {
 var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
 
     // Return Product data
+    getPending: function() {
+        return _dataPlaylistItemsStore.pending;
+    },
+
+    getError: function() {
+        return _dataPlaylistItemsStore.error;
+    },
+
     getPlaylistItems: function() {
         return _dataPlaylistItemsStore.playlistitems;
     },
@@ -61,20 +82,19 @@ var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
 // Register callback with AppDispatcher
 AppDispatcher.register(function(payload) {
     var action = payload.action;
-    var text;
 
     switch(action.actionType) {
         case FluxCartConstants.LOAD_PLAYLISTITEMS:
             _PlaylistItemsStoreLoadPending(action.playlistid);
             setTimeout(function() {
-            	WolkAPI.loadPlaylist(action.projectid, action.playlistid);
+                WolkAPI.loadPlaylist(action.projectid, action.playlistid);
             }, 2000);
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_SUCCESS:
             _PlaylistItemsStoreLoadSuccess(action.data);
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_FAIL:
-            // ??
+            _PlaylistItemsStoreLoadFail(action.error);
             break;
         default:
             return true;
