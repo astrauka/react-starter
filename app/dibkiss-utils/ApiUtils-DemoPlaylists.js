@@ -11,11 +11,11 @@ module.exports = {
         request.get(this.demoapi)
             .auth(this.demouser, this.demopass)
             .accept('application/json')
-            .end(function (resp) {
+            .end(function (err, resp) {
                 if (resp.ok) {
                     myCallback(true, resp.body);
                 } else {
-                    myCallback(false, resp); // resp for debug
+                    myCallback(false, err);
                 }
             });
     },

@@ -1,5 +1,27 @@
 var request = require("superagent");
 
+
+function injectUrlValues(url_template, arr_values) {
+    var insertVal = function(part) {
+        if (part.charAt(0)!=':') { return part; }
+        // Replace by value:
+        let name = part.slice(1);
+        if (name in arr_values) { return arr_values[name]; }
+        // Failed:
+        console.warn("injectUrlValues() missing value for " + part); // debug
+        return undefined;
+    };
+
+    let parts = url_template.split('/');
+    // Inject values in url. (e.g. arr_values.barid in "/bar/:barid/foo/")
+    parts = parts.map(insertVal);
+    // Remove any null values, avoids "//" in output.
+    //parts = parts.filter((part)=>{ return part!==null; });
+    return parts.join('/');
+}
+
+const demoapi_root = "http://test2.qwolk.q-lite.org/";
+
 // Test code for PlaylistPage
 module.exports = {
     // Test settings
@@ -7,8 +29,18 @@ module.exports = {
     demouser: "auser",
     demopass: "apass",
 
-    demoLoadItems: function (myProjectId, myPlaylistId, myCallback) {
-        let url = "http://test2.qwolk.q-lite.org/v0/projects/"+ myProjectId +"/playlists/"+ myPlaylistId +"/items/";
+    //wolkapiv0_playlists:     demoapi_root + "v0/projects/:projectid/playlists/",
+    //wolkapiv0_playlist:      demoapi_root + "v0/projects/:projectid/playlists/:playlistid/",
+    wolkapiv0_playlistitems: demoapi_root + "v0/projects/:projectid/playlists/:playlistid/items",
+    //wolkapiv0_playlistitem:  demoapi_root + "v0/projects/:projectid/playlists/:playlistid/items/:itemid",
+    //wolkapiv0_schedules:     demoapi_root + "v0/projects/:projectid/playlists/:playlistid/schedules",
+    //wolkapiv0_schedule:      demoapi_root + "v0/projects/:projectid/playlists/:playlistid/schedules/:scheduleid",
+
+    demoLoadItems: function (projectid, playlistid, myCallback) {
+        let url = injectUrlValues(this.wolkapiv0_playlistitems, {
+            projectid: projectid,
+            playlistid: playlistid
+        });
         request.get(url)
             //.query({filtertags: ['tag-a','tag-b'], range: '1..5', order: 'desc' })
             //.timeout
