@@ -13,13 +13,13 @@ var DibkissPlaylistItems = React.createClass({
             rows.push(<PlaylistListItem i={i+1} playlist={playlistid} item={item} key={item.id} onEditItem={this.onEditItem} onRemoveItem={this.onRemoveItem} />);
         }.bind(this));
         if (pending) {
-            rows.push(<tr key={-2}><td>Pending..</td></tr>);
+            rows.push(<tr key={-2}><td colSpan="5">Pending..</td></tr>);
         }
         if (error) {
-            rows.push(<tr key={-3}><td>Error: {error.message}</td></tr>);
+            rows.push(<tr key={-3}><td colSpan="5">Error: {error.response.body.error.message}</td></tr>);
         }
         if (rows.length===0) {
-            rows.push(<tr key={-1}><td>Nothing to display.</td></tr>);
+            rows.push(<tr key={-1}><td colSpan="5">Nothing to display.</td></tr>);
         }
 
         return (

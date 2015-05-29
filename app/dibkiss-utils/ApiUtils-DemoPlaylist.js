@@ -18,7 +18,7 @@ module.exports = {
                 if (res.ok) {
                     myCallback(true, res.body);
                 } else {
-                    myCallback(false, res); // resp for debug
+                    myCallback(false, err);
                 }
             });
     },
@@ -33,7 +33,7 @@ module.exports = {
                     myCallback(true, res.body);
                     console.log("demoAddItem ok: " + res.text);
                 } else {
-                    myCallback(false, null);
+                    myCallback(false, err);
                     console.log("demoAddItem fail: " + res.text);
                 }
             });
@@ -48,7 +48,7 @@ module.exports = {
                     myCallback(true, res.body);
                     console.log("demoRemoveItem ok: " + res.text);
                 } else {
-                    myCallback(false, null);
+                    myCallback(false, err);
                     console.log("demoRemoveItem fail: " + res.text);
                 }
             });
@@ -64,7 +64,7 @@ module.exports = {
                     myCallback(true, resp.body);
                     console.log("demoEditItem ok: " + res.text);
                 } else {
-                    myCallback(false, null);
+                    myCallback(false, err);
                     console.log("demoEditItem fail: " + res.text);
                 }
             });
