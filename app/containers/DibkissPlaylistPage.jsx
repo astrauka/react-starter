@@ -3,20 +3,13 @@ var PlaylistItemsStore = require('../dibkiss-playlistitemsstore');
 var PlaylistItems = require('../components/DibkissPlaylistItems');
 var DibkissActions = require('../dibkiss-actions');
 
-// Method to retrieve state from Stores
-function getPlaylistState() {
-    return PlaylistItemsStore.getStoredata();
-}
 
 // Define main Controller View
 var DibkissPlaylistPage = React.createClass({
 
     // Get initial state from stores
     getInitialState: function() {
-        return {
-            playlistid: getPlaylistState().playlistid, // temporary
-            dataItems: getPlaylistState()
-        }
+        return this.getControllerViewStateFromStores();
     },
 
     // Add change listeners to stores
@@ -29,11 +22,22 @@ var DibkissPlaylistPage = React.createClass({
         PlaylistItemsStore.removeChangeListener(this._onChange);
     },
 
+    // Method to retrieve state from Stores
+    getControllerViewStateFromStores: function() {
+        //if (!PlaylistItemsStore) { return null; }
+        return {
+            playlistid: PlaylistItemsStore.getStoredata().playlistid, // temporary
+            dataItems:  PlaylistItemsStore.getStoredata(),
+            itemsCount: PlaylistItemsStore.getPlaylistItemsCount()
+        }
+    },
+
     // Render our child components, passing state via props
     render: function() {
         return (
             <div>
                 <h1>Playlist {this.state.playlistid} items:</h1>
+                <span>(showing {this.state.itemsCount} items)</span>
                 <PlaylistItems storedata={this.state.dataItems} />
                 {/*
                 <h1>Playlist schedules:</h1>
@@ -48,10 +52,7 @@ var DibkissPlaylistPage = React.createClass({
 
     // Method to setState based upon Store changes
     _onChange: function() {
-        this.setState({
-            playlistid: getPlaylistState().playlistid, // temporary
-            dataItems: getPlaylistState()
-        });
+        this.setState(this.getControllerViewStateFromStores());
     },
 
     _loadPlaylist2: function() {

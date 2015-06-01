@@ -58,17 +58,10 @@ var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
         return _dataPlaylistItemsStore;
     },
 
-    getPlaylistItems: function() {
-        return _dataPlaylistItemsStore.playlistitems;
-    },
-
-    getPlaylistID: function() {
-        return _dataPlaylistItemsStore.playlistid;
-    },
-
     // Return Product data
     getPlaylistItemsCount: function() {
         return Object.keys(_dataPlaylistItemsStore.playlistitems).length;
+        // ^ not using .length directly, because it wont work with the keyed indexes: object not array.
     },
 
     // Emit Change event
