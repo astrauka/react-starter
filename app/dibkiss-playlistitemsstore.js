@@ -6,16 +6,6 @@ var WolkAPI = require('dibkiss-utils/WolkAPI');
 // polyfill
 var Objectassign = require('react/lib/Object.assign');
 
-
-// Internal data storage as global variable:
-var _dataPlaylistItemsStore = {
-    pending : false,
-    error : null,
-    playlistitems: [],
-    playlistid: null
-};
-
-
 function makeErrorInfoFromSuperagentError(error) {
     return makeErrorInfo(
         error.status,
@@ -31,14 +21,21 @@ function makeErrorInfo(status,message) {
 
 // Extend ProductStore with EventEmitter to add eventing capabilities
 var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
+    // Internal data storage as global variable:
+    _dataStore : {
+        pending : false,
+        error : null,
+        playlistitems: [],
+        playlistid: null
+    },
 
     // Return Product data
     getStoredata: function() {
-        return _dataPlaylistItemsStore;
+        return this._dataStore;
     },
 
     getPlaylistItemsCount: function() {
-        return Object.keys(_dataPlaylistItemsStore.playlistitems).length;
+        return Object.keys(this._dataStore.playlistitems).length;
         // ^ not using .length directly, because it wont work with the keyed indexes: object not array.
     },
 
@@ -46,23 +43,23 @@ var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
 
     // Internal methods
     LoadItemsSuccess: function(data) {
-        _dataPlaylistItemsStore.pending = false;
-        _dataPlaylistItemsStore.error = null;
-        _dataPlaylistItemsStore.playlistid = data.playlistid;
-        _dataPlaylistItemsStore.playlistitems = data.items;
+        this._dataStore.pending = false;
+        this._dataStore.error = null;
+        this._dataStore.playlistid = data.playlistid;
+        this._dataStore.playlistitems = data.items;
     },
 
     LoadItemsFail: function(error) {
-        _dataPlaylistItemsStore.pending = false;
-        _dataPlaylistItemsStore.error = makeErrorInfoFromSuperagentError(error);
-        _dataPlaylistItemsStore.playlistitems = [];
+        this._dataStore.pending = false;
+        this._dataStore.error = makeErrorInfoFromSuperagentError(error);
+        this._dataStore.playlistitems = [];
     },
 
     LoadItemsPending: function(playlistid) {
-        _dataPlaylistItemsStore.pending = true;
-        _dataPlaylistItemsStore.error = null;
-        _dataPlaylistItemsStore.playlistid = playlistid;     // Optimistic update.
-        _dataPlaylistItemsStore.playlistitems = [];
+        this._dataStore.pending = true;
+        this._dataStore.error = null;
+        this._dataStore.playlistid = playlistid;     // Optimistic update.
+        this._dataStore.playlistitems = [];
     },
 
     // ---
@@ -81,7 +78,6 @@ var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
     removeChangeListener: function(callback) {
         this.removeListener('change', callback);
     }
-
 });
 
 // Register callback with AppDispatcher
@@ -107,7 +103,6 @@ AppDispatcher.register(function(payload) {
     PlaylistItemsStore.emitChange();
 
     return true;
-
 });
 
 module.exports = PlaylistItemsStore;
