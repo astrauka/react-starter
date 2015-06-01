@@ -15,27 +15,6 @@ var _dataPlaylistItemsStore = {
     playlistid: null
 };
 
-// Internal methods
-function _PlaylistItemsStoreLoadSuccess(data) {
-    _dataPlaylistItemsStore.pending = false;
-    _dataPlaylistItemsStore.error = null;
-    _dataPlaylistItemsStore.playlistid = data.playlistid;
-    _dataPlaylistItemsStore.playlistitems = data.items;
-}
-
-function _PlaylistItemsStoreLoadFail(error) {
-    _dataPlaylistItemsStore.pending = false;
-    _dataPlaylistItemsStore.error = makeErrorInfoFromSuperagentError(error);
-    _dataPlaylistItemsStore.playlistitems = [];
-}
-
-function _PlaylistItemsStoreLoadPending(playlistid) {
-    _dataPlaylistItemsStore.pending = true;
-    _dataPlaylistItemsStore.error = null;
-    _dataPlaylistItemsStore.playlistid = playlistid;     // Optimistic update.
-    _dataPlaylistItemsStore.playlistitems = [];
-}
-
 
 function makeErrorInfoFromSuperagentError(error) {
     return makeErrorInfo(
@@ -58,11 +37,35 @@ var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
         return _dataPlaylistItemsStore;
     },
 
-    // Return Product data
     getPlaylistItemsCount: function() {
         return Object.keys(_dataPlaylistItemsStore.playlistitems).length;
         // ^ not using .length directly, because it wont work with the keyed indexes: object not array.
     },
+
+    // ---
+
+    // Internal methods
+    LoadItemsSuccess: function(data) {
+        _dataPlaylistItemsStore.pending = false;
+        _dataPlaylistItemsStore.error = null;
+        _dataPlaylistItemsStore.playlistid = data.playlistid;
+        _dataPlaylistItemsStore.playlistitems = data.items;
+    },
+
+    LoadItemsFail: function(error) {
+        _dataPlaylistItemsStore.pending = false;
+        _dataPlaylistItemsStore.error = makeErrorInfoFromSuperagentError(error);
+        _dataPlaylistItemsStore.playlistitems = [];
+    },
+
+    LoadItemsPending: function(playlistid) {
+        _dataPlaylistItemsStore.pending = true;
+        _dataPlaylistItemsStore.error = null;
+        _dataPlaylistItemsStore.playlistid = playlistid;     // Optimistic update.
+        _dataPlaylistItemsStore.playlistitems = [];
+    },
+
+    // ---
 
     // Emit Change event
     emitChange: function() {
@@ -87,14 +90,14 @@ AppDispatcher.register(function(payload) {
 
     switch(action.actionType) {
         case FluxCartConstants.LOAD_PLAYLISTITEMS:
-            _PlaylistItemsStoreLoadPending(action.playlistid);
+            PlaylistItemsStore.LoadItemsPending(action.playlistid);
             WolkAPI.loadPlaylist(action.projectid, action.playlistid);
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_SUCCESS:
-            _PlaylistItemsStoreLoadSuccess(action.data);
+            PlaylistItemsStore.LoadItemsSuccess(action.data);
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_FAIL:
-            _PlaylistItemsStoreLoadFail(action.error);
+            PlaylistItemsStore.LoadItemsFail(action.error);
             break;
         default:
             return true;
