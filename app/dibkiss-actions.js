@@ -65,6 +65,12 @@ var FluxCartActions = {
             actionType: FluxCartConstants.LOAD_PLAYLISTITEMS_FAIL,
             error: error
         })
+    },
+    testGetPlaylistItem: function(id) {
+        AppDispatcher.handleAction({
+            actionType: FluxCartConstants.TEST_GETPLAYLISTITEM,
+            id: id
+        })
     }
 
 };

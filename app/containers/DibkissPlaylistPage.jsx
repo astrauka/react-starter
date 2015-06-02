@@ -46,6 +46,7 @@ var DibkissPlaylistPage = React.createClass({
                 <button type="button" onClick={this._loadPlaylist3} disabled={this.state.playlistid==3}>load playlist 3</button>
                 <button type="button" onClick={this._loadPlaylist6} disabled={this.state.playlistid==6}>load playlist 6</button>
                 <button type="button" onClick={this._loadPlaylist9} disabled={this.state.playlistid==9}>load playlist 9</button>
+                <button type="button" onClick={this._testGetPlaylistItem}>_testPlaylistItemSet</button>
             </div>
         );
     },
@@ -65,7 +66,10 @@ var DibkissPlaylistPage = React.createClass({
         DibkissActions.loadPlaylistItems(1,6);
     },
     _loadPlaylist9: function() {
-        DibkissActions.loadPlaylistItems(1,9);
+        DibkissActions.loadPlaylistItems(1, 9);
+    },
+    _testGetPlaylistItem: function() {
+        DibkissActions.testGetPlaylistItem(77);
     }
 
 });

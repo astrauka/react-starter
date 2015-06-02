@@ -10,5 +10,7 @@ module.exports = keyMirror({
 
     LOAD_PLAYLISTITEMS: null,
     LOAD_PLAYLISTITEMS_SUCCESS: null,
-    LOAD_PLAYLISTITEMS_FAIL: null
+    LOAD_PLAYLISTITEMS_FAIL: null,
+
+    TEST_GETPLAYLISTITEM: null
 });

@@ -31,11 +31,18 @@ var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
 
     // Return Product data
     getStoredata: function() {
+        console.log(this._dataStore);
         return this._dataStore;
     },
-
+    getPlaylistItem: function(id) {
+        let found = this._dataStore.playlistitems.filter((item)=>{ return item.id == id; });
+        if (found.length===1) { return found[0]; }
+        console.warn('testGetPlaylistItem() couldnt find item '+id);
+        return null;
+    },
     getPlaylistItemsCount: function() {
-        return Object.keys(this._dataStore.playlistitems).length;
+        return this._dataStore.playlistitems.length;
+        //return Object.keys(this._dataStore.playlistitems).length;
         // ^ not using .length directly, because it wont work with the keyed indexes: object not array.
     },
 
@@ -94,6 +101,10 @@ AppDispatcher.register(function(payload) {
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_FAIL:
             PlaylistItemsStore.LoadItemsFail(action.error);
+            break;
+        case FluxCartConstants.TEST_GETPLAYLISTITEM:
+            // test just to output PlaylistItemsStore.getPlaylistItem() to console
+            console.log(PlaylistItemsStore.getPlaylistItem(action.id));
             break;
         default:
             return true;
