@@ -13,11 +13,13 @@ var _AppCore = {
 /* When an API fails, call this to check for deauth situations. */
 function _catchApiError(data) {
     if (data.status==401) {
-        let msg = 'Please give api pasw:';
-        if (_AppCore.apiauth.pasw=='') {
-            msg = 'Seems it expired.. ' + msg;
-        }
-        _AppCore.apiauth.pasw = window.prompt("Please provide api pasw", _AppCore.apiauth.pasw);
+        var msg = 'Please give api pasw:';
+        if (_AppCore.apiauth.pasw!='') { msg = 'Seems it expired.. ' + msg; }
+        _AppCore.apiauth.pasw = window.prompt(msg, _AppCore.apiauth.pasw);
+        // TODO: retry API request after auth would be great..
+    }
+    if (data.status==403) {
+        console.debug("bugnominate api 403", data.response);
     }
 }
 
@@ -31,8 +33,8 @@ module.exports = {
             if (ok) {
                 FluxCartActions.loadPlaylistItems_success(data);
             } else {
-                _catchApiError(data);
                 FluxCartActions.loadPlaylistItems_fail(data);
+                _catchApiError(data);
             }
         });
 
