@@ -8,7 +8,7 @@ import StoresWrapper from "./StoresWrapper";
 // dibkiss test
 var ProductData = require('../app/dibkiss-utils/MockProductData');
 var CartAPI = require('../app/dibkiss-utils/CartAPI');
-var WolkAPI = require('../app/dibkiss-utils/WolkAPI');
+var WolkAPI = require('../app/dibkiss-utils/QWolkCore');
 
 export default function renderApplication(routes, stores, options) {
 	var timeout = options.timeout || 600;

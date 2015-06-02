@@ -17,7 +17,7 @@ module.exports = {
     //wolkapiv0_schedules:     demoapi_root + "v0/projects/:projectid/playlists/:playlistid/schedules",
     //wolkapiv0_schedule:      demoapi_root + "v0/projects/:projectid/playlists/:playlistid/schedules/:scheduleid",
 
-    demoLoadItems: function (projectid, playlistid, myCallback) {
+    demoLoadItems: function (authpasw, projectid, playlistid, myCallback) {
         let url = ApiUtils.injectUrlValues(this.wolkapiv0_playlistitems, {
             projectid: projectid,
             playlistid: playlistid
@@ -25,7 +25,7 @@ module.exports = {
         request.get(url)
             //.query({filtertags: ['tag-a','tag-b'], range: '1..5', order: 'desc' })
             //.timeout
-            .auth(this.demouser, this.demopass)
+            .auth(this.demouser, authpasw)
             .accept('application/json')
             .end(function (err, res) {
                 if (res.ok) {
