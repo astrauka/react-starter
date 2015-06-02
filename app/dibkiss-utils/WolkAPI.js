@@ -12,9 +12,6 @@ module.exports = {
                 FluxCartActions.loadPlaylistItems_success(data);
             } else {
                 FluxCartActions.loadPlaylistItems_fail(data);
-                console.log("demoLoadItems() fail:");
-                console.log(data);
-                //alert('demoLoadItems() error see console log');
             }
         });
 

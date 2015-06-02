@@ -6,6 +6,8 @@ var WolkAPI = require('dibkiss-utils/WolkAPI');
 // polyfill
 var Objectassign = require('react/lib/Object.assign');
 
+/********************* common methods: *********************/
+
 function makeErrorInfoFromSuperagentError(error) {
     return makeErrorInfo(
         error.status,
@@ -19,57 +21,59 @@ function makeErrorInfo(status,message) {
     };
 }
 
+/********************* PlaylistItemsStore private variables: *********************/
+
+// Internal data storage as global variable:
+var _dataStore = {
+    pending : false,
+    error : null,
+    playlistitems: [],
+    playlistid: null
+};
+
+/********************* PlaylistItemsStore private methods: *********************/
+
+// Internal methods
+function _LoadItemsSuccess(data) {
+    _dataStore.pending = false;
+    _dataStore.error = null;
+    _dataStore.playlistid = data.playlistid;
+    _dataStore.playlistitems = data.items;
+};
+
+function _LoadItemsFail(error) {
+    _dataStore.pending = false;
+    _dataStore.error = makeErrorInfoFromSuperagentError(error);
+    _dataStore.playlistitems = [];
+};
+
+function _LoadItemsPending(playlistid) {
+    _dataStore.pending = true;
+    _dataStore.error = null;
+    _dataStore.playlistid = playlistid;     // Optimistic update.
+    _dataStore.playlistitems = [];
+};
+
+/********************* PlaylistItemsStore public methods: *********************/
+
 // Extend ProductStore with EventEmitter to add eventing capabilities
 var PlaylistItemsStore = Objectassign({}, EventEmitter.prototype, {
-    // Internal data storage as global variable:
-    _dataStore : {
-        pending : false,
-        error : null,
-        playlistitems: [],
-        playlistid: null
-    },
 
     // Return Product data
     getStoredata: function() {
-        console.log(this._dataStore);
-        return this._dataStore;
+        return _dataStore;
     },
     getPlaylistItem: function(id) {
-        let found = this._dataStore.playlistitems.filter((item)=>{ return item.id == id; });
+        let found = _dataStore.playlistitems.filter((item)=>{ return item.id == id; });
         if (found.length===1) { return found[0]; }
         console.warn('testGetPlaylistItem() couldnt find item '+id);
         return null;
     },
     getPlaylistItemsCount: function() {
-        return this._dataStore.playlistitems.length;
+        return _dataStore.playlistitems.length;
+        // But when its a keyed array use this instead:
         //return Object.keys(this._dataStore.playlistitems).length;
-        // ^ not using .length directly, because it wont work with the keyed indexes: object not array.
     },
-
-    // ---
-
-    // Internal methods
-    LoadItemsSuccess: function(data) {
-        this._dataStore.pending = false;
-        this._dataStore.error = null;
-        this._dataStore.playlistid = data.playlistid;
-        this._dataStore.playlistitems = data.items;
-    },
-
-    LoadItemsFail: function(error) {
-        this._dataStore.pending = false;
-        this._dataStore.error = makeErrorInfoFromSuperagentError(error);
-        this._dataStore.playlistitems = [];
-    },
-
-    LoadItemsPending: function(playlistid) {
-        this._dataStore.pending = true;
-        this._dataStore.error = null;
-        this._dataStore.playlistid = playlistid;     // Optimistic update.
-        this._dataStore.playlistitems = [];
-    },
-
-    // ---
 
     // Emit Change event
     emitChange: function() {
@@ -93,14 +97,14 @@ AppDispatcher.register(function(payload) {
 
     switch(action.actionType) {
         case FluxCartConstants.LOAD_PLAYLISTITEMS:
-            PlaylistItemsStore.LoadItemsPending(action.playlistid);
+            _LoadItemsPending(action.playlistid);
             WolkAPI.loadPlaylist(action.projectid, action.playlistid);
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_SUCCESS:
-            PlaylistItemsStore.LoadItemsSuccess(action.data);
+            _LoadItemsSuccess(action.data);
             break;
         case FluxCartConstants.LOAD_PLAYLISTITEMS_FAIL:
-            PlaylistItemsStore.LoadItemsFail(action.error);
+            _LoadItemsFail(action.error);
             break;
         case FluxCartConstants.TEST_GETPLAYLISTITEM:
             // test just to output PlaylistItemsStore.getPlaylistItem() to console
