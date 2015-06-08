@@ -25,6 +25,7 @@
     "babel-core": "^5.0.12",
     "babel-loader": "^5.0.0",
     "body-parser": "^1.9.3",
+    "coffee-redux-loader": "^0.7.2",
     "css-loader": "^0.12.0",
     "express": "^4.7.2",
     "extract-text-webpack-plugin": "^0.7.0",
